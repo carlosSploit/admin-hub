@@ -23,7 +23,7 @@ function Index() {
         </p>
         <div className="flex items-center justify-center gap-3">
           <Button asChild size="lg" variant="hero">
-            <Link to="/admin">
+            <Link to="/admin/dashboard">
               <LayoutDashboard className="h-4 w-4" />
               Entrar al admin
             </Link>
