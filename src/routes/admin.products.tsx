@@ -28,6 +28,7 @@ import {
 import { Plus, Pencil, Trash2, Search } from "lucide-react";
 import { initialProducts, type Product } from "@/data/mockData";
 import { toast } from "sonner";
+import {crearProducto} from  "../appi/app_productos";
 
 export const Route = createFileRoute("/admin/products")({
   component: ProductsPage,
@@ -61,13 +62,15 @@ function ProductsPage() {
     setForm(empty);
     setOpen(true);
   };
+
   const openEdit = (p: Product) => {
     setEditing(p);
     const { id: _id, createdAt: _c, ...rest } = p;
     setForm(rest);
     setOpen(true);
   };
-  const save = () => {
+
+  const save = async () => {
     if (!form.name.trim()) {
       toast.error("El nombre es obligatorio");
       return;
@@ -82,11 +85,13 @@ function ProductsPage() {
         ...form,
         image: form.image || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
       };
+      await crearProducto({...form});
       setProducts((arr) => [newP, ...arr]);
       toast.success("Producto creado");
     }
     setOpen(false);
   };
+
   const remove = (id: string) => {
     setProducts((arr) => arr.filter((p) => p.id !== id));
     toast.success("Producto eliminado");
